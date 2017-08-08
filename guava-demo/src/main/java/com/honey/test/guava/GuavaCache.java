@@ -20,7 +20,7 @@ public class GuavaCache {
 			cache.put(key, "AAAAAAAAAB");
 		}
 		long end = System.currentTimeMillis();
-//		System.out.println("cost "+(end-start)/1000.0+"s");
+		System.out.println("cost "+(end-start)/1000.0+"s");
 	}
 
 	public GuavaCache() {
