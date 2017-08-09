@@ -14,7 +14,7 @@ public class WriteOnlyClient extends MsgClient implements Runnable {
 	
 	public void run() {
 		long start = System.currentTimeMillis();
-		for(int i=0;i<200;i++) {
+		for(int i=0;i<50;i++) {
 			try {
 				this.writeToGuava();
 				Thread.sleep((long)(Math.random()*400));
@@ -24,20 +24,20 @@ public class WriteOnlyClient extends MsgClient implements Runnable {
 		}
 		long end = System.currentTimeMillis();
 		
-		try {
-			FileOutputStream fo1 = new FileOutputStream("C:\\Users\\h249365\\Desktop\\guava_200.txt", true);
-			PrintStream ps = new PrintStream(fo1);
-			System.setOut(ps);
+//		try {
+//			FileOutputStream fo1 = new FileOutputStream("C:\\Users\\h249365\\Desktop\\guava_200.txt", true);
+//			PrintStream ps = new PrintStream(fo1);
+//			System.setOut(ps);
 			System.out.println(this.getName()+"\t"+(end-start));
-			ps.close();
-			fo1.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//			ps.close();
+//			fo1.close();
+//		} catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 
 }

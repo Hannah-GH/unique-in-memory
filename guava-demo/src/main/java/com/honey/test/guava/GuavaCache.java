@@ -12,10 +12,10 @@ public class GuavaCache {
 	private static int outNum = 0;
 	
 	static {
-		cache = CacheBuilder.newBuilder().recordStats().maximumSize(30000).build();
+		cache = CacheBuilder.newBuilder().recordStats().maximumSize(5000).build();
 		long start = System.currentTimeMillis();
 		//generate 10000 data
-		for(int i=0;i<10000;i++) {
+		for(int i=0;i<4000;i++) {
 			String key = String.valueOf(i);
 			cache.put(key, "AAAAAAAAAB");
 		}

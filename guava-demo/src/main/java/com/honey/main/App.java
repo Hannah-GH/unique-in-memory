@@ -10,6 +10,7 @@ import java.util.concurrent.Semaphore;
 
 import com.honey.test.client.ReadOnlyClient;
 import com.honey.test.client.WriteOnlyClient;
+import com.honey.test.guava.GuavaCache;
 
 
 /**
@@ -25,6 +26,7 @@ public class App
 //			FileOutputStream fo1 = new FileOutputStream("C:\\Users\\h249365\\Desktop\\guava.txt", true);
 //			PrintStream ps = new PrintStream(fo1);
 //			System.setOut(ps);
+		GuavaCache guava = new GuavaCache();
 			int THREAD_MAX = 50;
 			ExecutorService exec = Executors.newFixedThreadPool(THREAD_MAX);
 			for(int i=0;i<THREAD_MAX;i++) {
@@ -61,8 +63,7 @@ public class App
 	
 	public static void main( String[] args )
 	{
-//		testGuava();
-		testConMap();
-		
+		testGuava();
+//		testConMap();
 	}
 }
