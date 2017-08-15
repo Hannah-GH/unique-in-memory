@@ -9,6 +9,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 
+import com.honey.storage.BasicCache;
+import com.honey.storage.ConcreteCache;
+import com.honey.storage.MsgObj;
+import com.honey.storage.MyCache;
 import com.honey.test.client.ReadOnlyClient;
 import com.honey.test.client.WriteOnlyClient;
 import com.honey.test.guava.GuavaCache;
@@ -82,12 +86,27 @@ public class App
 		long end = System.currentTimeMillis();
 		System.out.println("finished in "+(end-start)+"ms");
 	}
+	
+	public static void test() {
+		BasicCache<String,MsgObj> bc = new ConcreteCache();
+		bc.put("a", new MsgObj("aaa"));
+		bc.put("b", new MsgObj("bbb"));
+		bc.put("a", new MsgObj("aaa"));
+		bc.put("b", new MsgObj("bbc"));
+		try {
+			Thread.sleep(5900);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		bc.put("a", new MsgObj("aaa"));
+	}
 
 	public static void main( String[] args )
 	{
 		//		testGuava();
 //		testConMap();
-		singleThreadGuava();
-
+//		singleThreadGuava();
+		test();
 	}
 }

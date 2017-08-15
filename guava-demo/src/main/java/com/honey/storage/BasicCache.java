@@ -8,17 +8,14 @@ package com.honey.storage;
  * @param <V>
  */
 public interface BasicCache<K,V> {
-	/**
-	 * 获取key对应的记录
-	 * @param key
-	 * @return V value
-	 */
-	public V get(K key);
 	
 	/**
-	 * 向缓存中添加新记录
+	 * 
 	 * @param key
 	 * @param value
+	 * @return false 表示消息不更新
+	 * 			true 表示执行消息更新
 	 */
-	public void put(K key, V value);
+	public boolean put(K key, V value);
+	
 }

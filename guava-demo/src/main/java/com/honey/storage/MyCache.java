@@ -1,13 +1,12 @@
 package com.honey.storage;
 
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 
-public class MyCache<K,V> implements BasicCache<K,V>{
+public abstract class MyCache<K,V>{
 	/*
 	 * 缓存
 	 */
@@ -19,7 +18,7 @@ public class MyCache<K,V> implements BasicCache<K,V>{
 	/*
 	 * 过期时间和单位
 	 */
-	private long expire = 60;
+	private long expire = 60l;
 	private TimeUnit timeUnit = TimeUnit.SECONDS;
 	/*
 	 * 设置缓存大小上限，超过此值就开始LRU替换
@@ -35,30 +34,36 @@ public class MyCache<K,V> implements BasicCache<K,V>{
 		cache = CacheBuilder.newBuilder().concurrencyLevel(concurrencyLevel).expireAfterAccess(expire, timeUnit).maximumSize(size).build();
 	}
 	
-	private V getValue(K key) throws ExecutionException {
-		V result = this.cache.get(key, new Callable<V>() {
-
-			public V call() throws Exception {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-		});
-		return result;
-	}
-
-	public V get(K key) {
+	/**
+	 * 
+	 * @param key
+	 * @return 处理结果为null的逻辑，避免抛guava异常
+	 * @throws ExecutionException
+	 */
+	protected abstract V fetchData(K key) throws ExecutionException;
+	
+	/**
+	 * 
+	 * @param value
+	 * @return
+	 */
+	protected abstract boolean isNull(V value);
+	
+	public V getValue(K key) {
 		V result = null;
 		try {
-			result = getValue(key);
+			result = this.fetchData(key);
+			if(isNull(result)) {
+				result = null;
+			}
 		} catch (ExecutionException e) {
-			//guava不允许返回null，这里捕获异常，不作任何处理，返回null
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
 		return result;
 	}
-
-	public void put(K key, V value) {
+	
+	public void putValue(K key, V value) {
 		this.cache.put(key, value);
 	}
 	
@@ -93,5 +98,11 @@ public class MyCache<K,V> implements BasicCache<K,V>{
 	public void setSize(int size) {
 		this.size = size;
 	}
+	
+	protected Cache<K,V> getCache(){ 
+		return cache; 
+	}
+	
+	
 
 }
